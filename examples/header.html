@@ -16,15 +16,21 @@
       // Initialize a cu instance
       var cu = new Cu({logger: true});
 
+      // Set up the elements for CU
+      var header = {
+        name: 'Main Header',
+        element: document.querySelector('h1')
+      };
+
       // Make some assertions about the header
       // Expect this to fail
       cu.assert(
-        document.querySelector('h1'),
+        header,
         {color: '#e47911'});
 
       // Expect this to pass
       cu.assert(
-        document.querySelector('h1'),
+        header,
         {color: '#444'});
     </script>
   </body>

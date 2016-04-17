@@ -13,10 +13,15 @@ var Cu = function (params) {
      * The main body of the CSS Unit method, which takes an element, applies styles,
      * and then sees if the computed styles match.
      *
-     * @param Node element, the element to apply styles to
+     * @param Object, the element to apply styles to. Should contain properties:
+     *        DOM Node `element`, the element to test.
+     *        String `name`, a human-reasabile name of the element.
      * @param Object styles, the styles to apply to the element and see if they match
      */
-    assert: function (element, styles) {
+    assert: function (cuElement, styles) {
+      var element = cuElement.element;
+      var name = cuElement.name;
+
       for (var property in styles) {
         // Cache the actual value
         var actualValue = window.getComputedStyle(element)[property];
@@ -31,10 +36,10 @@ var Cu = function (params) {
         element.style[property] = actualValue;
 
         if (appliedTestValue !== actualValue) {
-          console.error('FAIL: For', element, property, 'should be', testValue, 'but is', actualValue);
+          console.error('FAIL: For element named', name, 'the', property, 'should be', testValue, 'but is', actualValue);
         } else {
           if (logger) {
-            console.log('PASS: For', element, property, 'should be', testValue, 'and is', actualValue);
+            console.log('PASS: For element named', name, 'the', property, 'should be', testValue, 'and is', actualValue);
           }
         }
       }
